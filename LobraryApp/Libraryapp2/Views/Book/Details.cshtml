@@ -1,0 +1,15 @@
+﻿<h1>@Model.Title by @Model.Author</h1>
+<p>Genre: @Model.Genre</p>
+<p>Status: @Model.Status</p>
+@if (Model.Status == "Available")
+{
+    <form method="post" action="@Url.Action("Borrow", "Book", new { id = Model.Id })">
+        <button type="submit">Borrow</button>
+    </form>
+}
+else
+{
+    <form method="post" action="@Url.Action("Return", "Book", new { id = Model.Id })">
+        <button type="submit">Return</button>
+    </form>
+}
