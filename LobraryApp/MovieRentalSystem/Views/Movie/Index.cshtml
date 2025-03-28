@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Movie>
+
+<h2>Movie Catalog</h2>
+
+<form method="get" asp-action="Index">
+    <input type="text" name="search" placeholder="Search by Title, Genre, Director..." />
+    <button type="submit">Search</button>
+</form>
+
+<ul>
+    @foreach (var movie in Model)
+    {
+        <li>
+            <strong>@movie.Title</strong> - @movie.Director - @movie.Genre - @movie.ReleaseYear
+            @if (movie.IsAvailable)
+            {
+                <a href="@Url.Action("Rent", "Movie", new { id = movie.Id })">Rent</a>
+            }
+            else
+            {
+                <span>Rented</span>
+            }
+        </li>
+    }
+</ul>

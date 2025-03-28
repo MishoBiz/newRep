@@ -48,7 +48,38 @@ namespace MovieRentalSystem
                 pattern: "{controller=Home}/{action=Index}/{id?}");
             app.MapRazorPages();
 
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                var logger = services.GetRequiredService<ILogger<Program>>();
+
+                try
+                {
+                    // Call a separate async method
+                    SeedDatabaseAsync(services, logger).Wait();
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError(ex, "An error occurred while seeding the database.");
+                }
+            }
+
+
             app.Run();
+
+            
+            static async Task SeedDatabaseAsync(IServiceProvider services, ILogger logger)
+            {
+                try
+                {
+                    await SeedData.Initialize(services);
+                    logger.LogInformation("Seed data initialized successfully.");
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError(ex, "An error occurred while seeding the database.");
+                }
+            }
         }
     }
 }

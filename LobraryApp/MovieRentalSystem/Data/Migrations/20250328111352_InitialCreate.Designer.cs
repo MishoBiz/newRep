@@ -12,7 +12,7 @@ using MovieRentalSystem.Data;
 namespace MovieRentalSystem.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250327144827_InitialCreate")]
+    [Migration("20250328111352_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
